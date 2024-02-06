@@ -1,0 +1,124 @@
+<div class="button-container">
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      class="button"
+      (click)="addPostDialog()"
+    >
+      Add post
+      <mat-icon>post_add</mat-icon>
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="button"
+      (click)="openInput = true"
+    >
+      Search post
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <div class="search-container" *ngIf="openInput">
+    <mat-form-field>
+      <mat-label>Input post title</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="postTitle"
+        (keydown.enter)="searchPost(postTitle)"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        color="primary"
+        [(ngModel)]="postTitle"
+        (click)="searchPost(postTitle)"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matSuffix
+        color="warn"
+        (click)="ngOnInit(); openInput = false"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>
+
+<mat-spinner diameter="50" style="margin: auto" *ngIf="isLoading"></mat-spinner>
+
+<div *ngIf="!noPosts; else noPostsFound" class="post-list-container">
+  <div *ngIf="!isLoading">
+    <mat-card *ngFor="let post of posts$ | async; let i = index">
+      <mat-card-header>
+        <mat-card-title>{{ post.title }}</mat-card-title>
+        <mat-card-subtitle>
+          {{
+            postAuthors.get(post.id) == null
+              ? "Anonymous"
+              : postAuthors.get(post.id)
+          }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ post.body }}</p>
+      </mat-card-content>
+
+      <div
+        *ngIf="hasComments(post.id); else noComments"
+        class="comments-container"
+      >
+        <p style="font-weight: bolder">Comments</p>
+        <mat-card-content>
+          <p *ngFor="let comment of getCommentsForPost(post.id)">
+            <ng-container *ngIf="comment.post_id == post.id">
+              <mat-card-subtitle>
+                {{ comment.name }}
+              </mat-card-subtitle>
+
+              {{ comment.body }}
+            </ng-container>
+          </p>
+        </mat-card-content>
+      </div>
+
+      <ng-template #noComments>
+        <mat-card-subtitle style="text-align: center"
+          >No comments</mat-card-subtitle
+        >
+      </ng-template>
+
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addCommentDialog(post.id)"
+        >
+          Add comment
+          <mat-icon>mode_edit</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  </div>
+
+  <div *ngIf="!noPosts && !isLoading" class="pagination-container">
+    <mat-paginator
+      class="mat-elevation-z1"
+      [length]="postsCount"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[10, 20, 30]"
+      [pageIndex]="0"
+      (page)="onPageChange($event)"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+</div>
+
+<ng-template #noPostsFound>
+  <h2 style="text-align: center">No posts found with this title</h2>
+</ng-template>

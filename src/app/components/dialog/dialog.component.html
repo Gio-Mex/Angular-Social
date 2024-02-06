@@ -1,0 +1,87 @@
+<mat-dialog-content
+  *ngIf="
+    !dialogTitle.includes('Delete') && dialogTitle !== 'Logout';
+    else elseBlock
+  "
+>
+  <header>
+    <h2>{{ dialogTitle }}</h2>
+  </header>
+
+  <mat-form-field>
+    <mat-label>{{ field1Label }}</mat-label>
+    <input
+      *ngIf="!dialogTitle.includes('Comment'); else textArea"
+      matInput
+      name="{{ field1Label }}"
+      [(ngModel)]="field1"
+      required
+    />
+    <ng-template #textArea>
+      <textarea
+        matInput
+        name="{{ field1Label }}"
+        [(ngModel)]="field1"
+        required
+      ></textarea>
+    </ng-template>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="!dialogTitle.includes('Comment')">
+    <mat-label>{{ field2Label }}</mat-label>
+    <input
+      *ngIf="dialogTitle.includes('User'); else textArea"
+      matInput
+      name="{{ field2Label }}"
+      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+      [(ngModel)]="field2"
+      required
+    />
+    <ng-template #textArea>
+      <textarea
+        matInput
+        name="{{ field2Label }}"
+        [(ngModel)]="field2"
+        required
+      ></textarea>
+    </ng-template>
+  </mat-form-field>
+
+  <mat-radio-group
+    *ngIf="dialogTitle.includes('User')"
+    name="{{ field3Label }}"
+    color="warn"
+    [(ngModel)]="field3"
+    required
+  >
+    <mat-label>Gender:</mat-label>
+    <mat-radio-button value="male">Male</mat-radio-button>
+    <mat-radio-button value="female">Female</mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="isButtonDisabled()"
+    (click)="onSubmit()"
+  >
+    {{
+      dialogTitle.includes("Delete") || dialogTitle == "Logout"
+        ? "OK"
+        : "Submit"
+    }}
+  </button>
+  <button mat-raised-button color="warn" matDialogClose>Cancel</button>
+</mat-dialog-actions>
+
+<ng-template #elseBlock>
+  <mat-dialog-content>
+    <header>
+      <h2>{{ dialogTitle }}</h2>
+    </header>
+    <p>{{ field1Label }}</p>
+  </mat-dialog-content>
+</ng-template>

@@ -1,0 +1,54 @@
+<form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+  <h1>Signup</h1>
+
+  <mat-form-field class="input-field" appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" name="name" required [(ngModel)]="name" />
+  </mat-form-field>
+
+  <mat-form-field class="input-field" appearance="fill">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      name="email"
+      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+      required
+      [(ngModel)]="email"
+    />
+  </mat-form-field>
+
+  <p>
+    This web app is powered by GoREST platform.<br />
+    To get your access token, please login
+    <a href="https://gorest.co.in/consumer/login" target="_blank">HERE</a>
+  </p>
+
+  <mat-form-field class="input-field" appearance="fill">
+    <mat-label>Access Token</mat-label>
+    <input
+      matInput
+      type="text"
+      name="token"
+      pattern="^[0-9A-Fa-f]+$"
+      required
+      [(ngModel)]="token"
+    />
+  </mat-form-field>
+
+  <mat-radio-group name="gender" color="warn" [(ngModel)]="gender">
+    <mat-label>Gender:</mat-label>
+    <mat-radio-button value="male">Male</mat-radio-button>
+    <mat-radio-button value="female">Female</mat-radio-button>
+  </mat-radio-group>
+
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="!signupForm.valid"
+  >
+    Signup
+  </button>
+
+  <p>Already have an account? <a routerLink="/login">Login</a></p>
+</form>

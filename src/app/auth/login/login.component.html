@@ -1,0 +1,38 @@
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+  <h1>Login</h1>
+
+  <mat-form-field class="input-field" appearance="fill">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      type="email"
+      name="email"
+      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+      required
+      [(ngModel)]="email"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="input-field" appearance="fill">
+    <mat-label>Access token</mat-label>
+    <input
+      matInput
+      type="text"
+      name="token"
+      pattern="^[0-9A-Fa-f]+$"
+      required
+      [(ngModel)]="token"
+    />
+  </mat-form-field>
+
+  <p>Are you a new user? <a routerLink="/signup">Signup</a></p>
+
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="!loginForm.valid"
+  >
+    Login
+  </button>
+</form>

@@ -1,0 +1,66 @@
+<div *ngIf="user$ | async as user">
+  <button mat-mini-fab color="primary" style="text-align: center" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <h1>{{user.name}}</h1>
+
+  <h2 class=>Details</h2>
+  <div class="details-container mat-elevation-z1">
+    <section>
+    <span>Id</span><p>{{user.id}}</p>
+    </section>
+    <section>
+    <span>Email</span><p>{{user.email}}</p>
+    </section>
+    <section>
+    <span>Gender</span><p>{{user.gender}}</p>
+    </section>
+    <section>
+    <span>Post(s)</span><p>{{(posts$ | async)?.length}}</p>
+    </section>
+    <section>
+      <span>Status</span> <p [ngStyle]="{'color': user.status === 'active' ? 'green' : 'red'}">{{user.status}}</p>
+    </section>
+  </div>
+
+  <h2 *ngIf="(posts$ | async)?.length">Posts</h2>
+
+  <mat-spinner diameter="50" style="margin: auto" *ngIf="isLoading"></mat-spinner>
+  
+  <div *ngIf="!isLoading" class="posts-container">
+    <mat-card *ngFor="let post of posts$ | async; let i = index">
+    <mat-card-header>
+    <mat-card-title>{{post.title}}</mat-card-title>
+  <mat-card-subtitle>{{user.name}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+  <p>{{post.body}}</p>
+  </mat-card-content>
+  
+  <div *ngIf="hasComments(post.id); else noComments" class="comments-container"> 
+  <mat-card-subtitle>Comments</mat-card-subtitle>
+  <mat-card-content>
+    <p *ngFor="let comment of comments">
+      <ng-container *ngIf="comment.post_id === post.id">      
+      <mat-card-subtitle>
+        {{comment.name}}
+      </mat-card-subtitle>
+        
+      {{comment.body}}
+    </ng-container>
+  </p>
+  </mat-card-content>
+  </div>
+
+  <ng-template #noComments>
+    <mat-card-subtitle style="text-align: center;">No comments</mat-card-subtitle>
+  </ng-template>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="addCommentDialog(post.id)">Add comment
+      <mat-icon>mode_edit</mat-icon>
+    </button>
+  </mat-card-actions>
+  </mat-card>
+  </div>

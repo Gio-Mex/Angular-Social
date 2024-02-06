@@ -1,0 +1,8 @@
+mat-toolbar {
+  background-color: black;
+  color: #e9f5ff;
+  display: flex;
+  position: fixed;
+  height: 70px;
+  z-index: 100;
+}

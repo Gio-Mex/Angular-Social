@@ -1,0 +1,32 @@
+<mat-drawer-container class="sidenav-container" autosize hasBackdrop="false">
+  <mat-drawer #drawer class="sidenav" mode="over" back [opened]="isOpen">
+    <ul>
+      <li>
+        <a
+          routerLink="/user-list"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          <button mat-flat-button color="primary" (click)="isOpen = false">
+            User List
+          </button>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/post-list"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          <button mat-flat-button color="primary" (click)="isOpen = false">
+            Post List
+          </button>
+        </a>
+      </li>
+    </ul>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>

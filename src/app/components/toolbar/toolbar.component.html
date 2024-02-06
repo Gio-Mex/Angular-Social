@@ -1,0 +1,30 @@
+<mat-toolbar
+  color="primary"
+  [ngStyle]="{ 'justify-content': isLoggedIn() ? 'space-between' : 'center' }"
+  class="mat-elevation-z4"
+>
+  <button
+    *ngIf="isLoggedIn()"
+    mat-icon-button
+    matTooltip="Logout"
+    matTooltipPosition="left"
+    aria-label="Icon-button with menu icon"
+    matTooltip="Menu"
+    (click)="openSidenav()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1>{{ title || "Angular Dashboard" }}</h1>
+  <div>
+    <button
+      *ngIf="isLoggedIn()"
+      mat-icon-button
+      matTooltip="Logout"
+      matTooltipPosition="left"
+      aria-label="Icon-button with logout icon"
+      (click)="logoutDialog()"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

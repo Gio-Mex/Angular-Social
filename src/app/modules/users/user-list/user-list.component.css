@@ -1,0 +1,42 @@
+.table-container {
+  max-width: 100%;
+  padding: 20px;
+  margin-bottom: 0px;
+  overflow:auto;
+}
+
+.table-row:hover {
+  background-color: #e9f5ff;
+  cursor: pointer;
+}
+
+.table-row:active {
+  opacity: 0.8;
+}
+
+.button-container {
+  padding-bottom: 10px;
+  margin: 0px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.button {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-right: 8px;
+}
+
+.search-container {
+  margin-top: 10px;
+}
+
+.pagination-container{
+  text-align: center;
+}
+
+mat-paginator {
+margin: 0px 20px 20px 20px;
+padding-bottom: 10px;
+}

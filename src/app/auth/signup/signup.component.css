@@ -1,0 +1,25 @@
+form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  }
+
+h1 {
+  font-weight: bold;
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #3f51b5;
+}
+
+a:visited {
+  color: #3f51b5;
+}
+
+button {
+  margin: 1em;
+}
