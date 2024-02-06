@@ -28,7 +28,7 @@ The first page displayed is the list of users, at the bottom through the paginat
 By selecting a user it will be possible to go to the user detail section, where in addition to the basic information you will also be able to see their posts (if there are any) and add comments.
 
 At the top left of the toolbar you can access the menu and select the post list section. Here too the paginator will allow you to view the total posts and manage the page, furthermore here too it is possible to add posts, search for a post by title, and add comments.
-Finally, at the top right of the toolbar you can log in.
+Finally, at the top right of the toolbar you can log out.
 
 ## Features
 - Add user, search user by name or email, delete user
