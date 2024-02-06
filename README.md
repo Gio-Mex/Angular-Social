@@ -17,7 +17,9 @@ Then, you can install the Angular CLI:
 npm install -g @angular/cli
 ```
 
-Now run `ng serve` for a dev server. Navigate to http://localhost:4200/. The application will automatically reload if you change any of the source files.  
+Now run `ng serve` for a dev server. Navigate to http://localhost:4200/. The application will automatically reload if you change any of the source files.
+
+`ng build` only executes the builder for the build target in the default project as specified in angular.json. 
 
 ## Usage
 The first thing Angular Social will ask you to do is log in via an email and an access token. If this is your first access then you can choose to register (with the exception of the token, the data must not be real but at least in the correct format). The registration page will ask you to retrieve the token by directing you to the Go Rest website, where you can log in through a Github, Google or Microsoft account. At this point you should open the Access Token section, alternatively you can open the drop-down menu at the top right and open API Tokens. Now you can copy the access token and paste it into the Angular Social registration form. Once you have registered successfully, you can log in.  
