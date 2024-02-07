@@ -5,7 +5,7 @@
 ![Static Badge](https://img.shields.io/badge/ANGULAR-black?style=for-the-badge&logo=Angular&logoColor=red)
 
 ## Description
-Angular Social is a basic simulation of a social network powered by [Go REST](gorest.co.in), designed with Angular, HTML, CSS and Angular Material. It is organized into modules, and uses routes guard and lazy loading.
+Angular Social is a basic simulation of a social network powered by [Go REST](https://gorest.co.in/), designed with Angular, HTML, CSS and Angular Material. It is organized into modules, and uses routes guard and lazy loading.
 
 ![Screenshot of post-list](src/assets/img/index-preview.jpeg)
 
