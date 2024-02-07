@@ -7,7 +7,7 @@
 ## Description
 Angular Social is a basic simulation of a social network powered by [Go REST](gorest.co.in), designed with Angular, HTML, CSS and Angular Material. It is organized into modules, and uses routes guard and lazy loading.
 
-![Screenshot of post-list](src/assets/img/post-list-preview.jpeg)
+![Screenshot of post-list](src/assets/img/index-preview.jpeg)
 
 ## Installation
 If you're using OS X or Windows, use one of the installers from the [Node.js download page](https://nodejs.org/en/download/). LTS versions of Node.js are recommended.
