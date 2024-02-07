@@ -1,4 +1,9 @@
-<form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+<video autoplay muted loop id="video-background">
+  <source src="../../../assets/img/index-video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<form #signupForm="ngForm" class="mat-elevation-z8" (ngSubmit)="onSubmit(signupForm)">
   <h1>Signup</h1>
 
   <mat-form-field class="input-field" appearance="fill">

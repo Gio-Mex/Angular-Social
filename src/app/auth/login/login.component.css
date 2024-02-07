@@ -1,4 +1,21 @@
+#video-background {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100; /* Assicurati che il video sia dietro altri contenuti */
+  background-size: cover;
+}
+
 form{
+  background-color: #fff;
+  width: 320px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
