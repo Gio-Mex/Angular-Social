@@ -36,7 +36,6 @@ export class UserDetailComponent {
   ) {}
 
   ngOnInit(): void {
-    this.userService.title = 'User';
     this.isLoading = true;
     this.getUser().subscribe((_user: any) => {
       this.user$ = of(_user.body[0]);

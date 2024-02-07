@@ -74,7 +74,6 @@ describe('UserListComponent', () => {
     mockUsersService.getUsers.and.returnValue(of(mockUsers));
 
     component.ngOnInit();
-    expect(mockUsersService.title).toEqual('Users');
     expect(mockUsersService.getUsers).toHaveBeenCalled();
     expect(component.dataSource).toEqual(mockUsers.body);
     expect(component.totalCount).toEqual(mockUsers.count);

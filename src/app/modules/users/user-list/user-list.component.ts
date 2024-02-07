@@ -41,7 +41,6 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.usersService.title = 'Users';
     this.isLoading = true;
     this.research = '';
     this.totalCount = 0;

@@ -34,7 +34,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(
       routes,
-      { useHash: true }
+      { useHash: true } // <-- enable this for HTML5 history
       /*{ enableTracing: true }*/ // <-- debugging purposes only
     ),
   ],

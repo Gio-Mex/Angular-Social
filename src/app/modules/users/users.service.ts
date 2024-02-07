@@ -10,7 +10,6 @@ import { User } from '../../models/user';
 })
 export class UsersService {
   pageSize = 10;
-  title!: string;
 
   constructor(private appDataService: AppDataService) {}
 

@@ -1,13 +1,14 @@
 import { Component, ElementRef } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 
+import { DialogComponent } from '../../../components/dialog/dialog.component';
+
+import { Comment } from '../../../models/comment';
+
 import { PostsService } from '../posts.service';
 import { UsersService } from '../../users/users.service';
 import { DialogService } from '../../../services/dialog.service';
 
-import { Comment } from '../../../models/comment';
-
-import { DialogComponent } from '../../../components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 
