@@ -69,10 +69,10 @@ export class UserListComponent implements OnInit {
         this.noUsers = true;
         this.isLoading = false;
       } else {
-        this.dataSource = users.body;
-        this.totalCount = users.count;
         this.noUsers = false;
         this.isLoading = false;
+        this.dataSource = users.body;
+        this.totalCount = users.count;
       }
     });
   }
