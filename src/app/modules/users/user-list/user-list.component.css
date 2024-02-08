@@ -2,7 +2,7 @@
   max-width: 100%;
   padding: 20px;
   margin-bottom: 0px;
-  overflow:auto;
+  overflow: auto;
 }
 
 .table-row:hover {
@@ -32,11 +32,21 @@
   margin-top: 10px;
 }
 
-.pagination-container{
+mat-radio-group {
+  display: flex;
+  justify-content: center;
+  margin-right: 30px;
+}
+
+mat-radio-button {
+  margin-right: 10px;
+}
+
+.pagination-container {
   text-align: center;
 }
 
 mat-paginator {
-margin: 0px 20px 20px 20px;
-padding-bottom: 10px;
+  margin: 0px 20px 20px 20px;
+  padding-bottom: 10px;
 }

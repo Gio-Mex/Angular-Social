@@ -40,6 +40,7 @@ export class PostListComponent {
   ngOnInit(){
     this.isLoading = true;
     this.noPosts = false;
+    this.openInput = false;
     this.postTitle = '';
     this.postsService.pageSize = this.pageSize;
     this.comments = [];
@@ -55,8 +56,8 @@ export class PostListComponent {
           this.isLoading = false;
         } else {
           this.noPosts = false;
-        this.posts$ = of(_posts.body);
-        this.postsCount = _posts.count;
+          this.posts$ = of(_posts.body);
+          this.postsCount = _posts.count;
         for (let post of _posts.body) {
           this.usersService.getUsers(`/${post.user_id}/`).subscribe((user) => {
             const author = user.body.name;

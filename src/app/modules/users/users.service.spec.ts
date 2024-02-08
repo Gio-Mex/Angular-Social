@@ -24,7 +24,7 @@ describe('UsersService', () => {
   });
 
   it('should retrieve users', () => {
-    const mockQuery = '?page=1&limit=10';
+    const mockQuery = 'page=1&limit=10';
     const mockResponse = [{ id: '1', name: 'John' }, { id: '2', name: 'Jane' }];
 
     service.getUsers(mockQuery)
@@ -33,7 +33,7 @@ describe('UsersService', () => {
       expect(users).toEqual(mockResponse);
     });
 
-    const req = httpTestingController.expectOne('https://gorest.co.in/public/v2/users' + mockQuery);
+    const req = httpTestingController.expectOne('https://gorest.co.in/public/v2/users?' + mockQuery);
     expect(req.request.method).toEqual('GET');
     req.flush(mockResponse);
   });

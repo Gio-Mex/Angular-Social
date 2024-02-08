@@ -8,7 +8,6 @@ import { DialogService } from '../../../services/dialog.service';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -28,6 +27,8 @@ export class UserListComponent implements OnInit {
   pageSize = 10;
   pageNumber = 1;
   research!: string;
+  searchSubject: 'name' | 'email' = 'name';
+  searchUrl!: string;
   openInput: boolean = false;
   totalCount!: number;
   isLoading!: boolean;
@@ -42,44 +43,38 @@ export class UserListComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.noUsers = false;
+    this.openInput = false;
     this.research = '';
-    this.totalCount = 0;
+    this.searchSubject = 'name';
     this.usersService
-    .getUsers(`?page=${this.pageNumber}&per_page=${this.pageSize}`)
-    .subscribe((users) => {
-        this.dataSource = Object.values(users.body);
+      .getUsers(`page=${this.pageNumber}&per_page=${this.pageSize}`)
+      .subscribe((users) => {
+        this.dataSource = users.body;
         this.totalCount = users.count;
         this.isLoading = false;
       });
   }
 
-  searchUser(research: string): Observable<any> {
+  searchUser(research: string): void {
+    this.research = research;
     this.isLoading = true;
-    this.noUsers = false;
-   return of ( this.usersService
-      .getUsers(`?name=${research}&page=${this.pageNumber}&per_page=${this.pageSize}`)
-      .subscribe((users) => {
-        if (users.body.length == 0) {
-          this.usersService
-            .getUsers(`?email=${research}&page=${this.pageNumber}&per_page=${this.pageSize}`)
-            .subscribe((users) => {
-              if (users.body.length == 0) {
-                this.noUsers = true;
-                this.isLoading = false;
-              } else {
-                this.dataSource = users.body;
-                this.totalCount = users.count;
-                this.isLoading = false;
-                this.noUsers = false;
-              }
-            });
-        } else {
-          this.dataSource = users.body;
-          this.totalCount = users.count;
-          this.isLoading = false;
-          this.noUsers = false;
-        }
-      }));
+    this.usersService.pageSize = this.pageSize;
+    this.searchSubject == 'name'
+      ? (this.searchUrl = `name=${this.research}`)
+      : (this.searchUrl = `email=${this.research}`);
+    this.usersService.searchUrl = this.searchUrl;
+    this.usersService.searchUser().subscribe((users) => {
+      if (users.body.length === 0) {
+        this.noUsers = true;
+        this.isLoading = false;
+      } else {
+        this.dataSource = users.body;
+        this.totalCount = users.count;
+        this.noUsers = false;
+        this.isLoading = false;
+      }
+    });
   }
 
   addUserDialog(): void {
@@ -99,18 +94,22 @@ export class UserListComponent implements OnInit {
     this.dialogService.dialogTitle = 'Delete User';
     this.dialogService.field1Label = `Are you sure you want to delete ${user_name}?`;
     this.dialog.open(DialogComponent, {
-        enterAnimationDuration: '300ms',
-        exitAnimationDuration: '300ms',
-      })
-    }
+      enterAnimationDuration: '300ms',
+      exitAnimationDuration: '300ms',
+    });
+  }
 
-onPageChange(event: PageEvent): void {
+  onPageChange(event: PageEvent): void {
     this.pageSize = event.pageSize;
     this.pageNumber = event.pageIndex + 1;
     this.usersService.pageSize = this.pageSize;
-    this.searchUser(this.research)
+    this.usersService
+      .getUsers(
+        `${`${this.searchUrl}`}&page=${this.pageNumber}&per_page=${this.pageSize}`
+      )
       .subscribe((users) => {
-        this.dataSource = users.body;
+        this.dataSource = Object.values(users.body);
+        this.totalCount = users.count;
       });
   }
 

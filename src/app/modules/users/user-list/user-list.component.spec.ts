@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { UserListComponent } from './user-list.component';
@@ -39,7 +39,7 @@ describe('UserListComponent', () => {
   };
 
   beforeEach(async () => {
-    const usersServiceSpy = jasmine.createSpyObj('UsersService', ['getUsers']);
+    const usersServiceSpy = jasmine.createSpyObj('UsersService', ['getUsers', 'searchUser']);
     const dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
     const snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
 
@@ -80,47 +80,32 @@ describe('UserListComponent', () => {
     expect(component.isLoading).toBeFalse();
   });
 
-  it('should search users by name',() => {
-    component.research = 'john';
-    if (mockUsers.body[0].name.toLowerCase().includes(component.research)) {
+  it('should search users by name', fakeAsync(() => {
 
-    mockUsersService.getUsers.and.returnValue(of(mockUsers))
-  };
-    component.searchUser(component.research).subscribe(() => {
+    mockUsersService.searchUser.and.returnValue(of(mockUsers));
+
+    component.searchUser('john'); 
+
+    tick(); 
+
+    expect(component.dataSource).toEqual(mockUsers.body); 
+    expect(component.totalCount).toEqual(mockUsers.count); 
+    expect(component.noUsers).toBeFalse(); 
+    expect(component.isLoading).toBeFalse();
+  }));
+
+  it('should search users by email', fakeAsync(() => {
+    mockUsersService.searchUser.and.returnValue(of(mockUsers));
+
+    component.searchUser('johndoe@example.com');
+
+    tick();
+
     expect(component.dataSource).toEqual(mockUsers.body);
     expect(component.totalCount).toEqual(mockUsers.count);
     expect(component.noUsers).toBeFalse();
     expect(component.isLoading).toBeFalse();
-    }
-    )
-});
-
-  it('should search users by email',() => {
-    component.research = 'johndoe@example.com';
-    if (mockUsers.body[0].email.includes(component.research)) {
-    mockUsersService.getUsers.and.returnValue(of(mockUsers))
-  };
-    component.searchUser(component.research).subscribe(() => {
-    expect(component.dataSource).toEqual(mockUsers.body);
-    expect(component.totalCount).toEqual(mockUsers.count);
-    expect(component.noUsers).toBeFalse();
-    expect(component.isLoading).toBeFalse();
-    }
-    )
-  });
-
-  it('should set isLoading and noUsers flags appropriately when no users are found', () => {
-    const mockUsers = {
-      body: [],
-    };
-    mockUsersService.getUsers.and.returnValue(of(mockUsers))
-
-    component.searchUser('nonExistentUser').subscribe(() => {
-      expect(component.dataSource).toEqual([]);
-      expect(component.isLoading).toBeFalse();
-      expect(component.noUsers).toBeTrue();
-    });
-  });
+  }));
 
   it('should open the addUser dialog', () => {
     component.addUserDialog();

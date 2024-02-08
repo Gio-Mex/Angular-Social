@@ -29,7 +29,7 @@ export class LoginComponent {
 
   onSubmit(form: NgForm): void {
     this.authService.setBearerToken(this.token);
-    this.usersService.getUsers(`?email=${this.email}`).subscribe({
+    this.usersService.getUsers(`email=${this.email}`).subscribe({
       next: (users) => {
         if (users.body.length === 0) {
           const message = 'Email not found';

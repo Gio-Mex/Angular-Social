@@ -86,7 +86,6 @@ export class DialogComponent {
   }
 
   addComment(post_id: string): void {
-    console.log(post_id);
     this.postService
       .addComment(`${post_id}`, {
         name: localStorage.getItem('user.name:'),

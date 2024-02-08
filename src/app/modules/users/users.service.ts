@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 import { AppDataService } from '../../services/app-data.service';
 
@@ -9,12 +9,13 @@ import { User } from '../../models/user';
   providedIn: 'any',
 })
 export class UsersService {
-  pageSize = 10;
+  pageSize!: number;
+  searchUrl!: string;
 
   constructor(private appDataService: AppDataService) {}
 
   getUsers(query: any): Observable<any> {
-    return this.appDataService.getData('/users' + query);
+    return this.appDataService.getData('/users?' + query);
   }
 
   addUser(data: object): Observable<User> {
@@ -23,5 +24,11 @@ export class UsersService {
 
   deleteUser(id: string): Observable<any> {
     return this.appDataService.deleteData(`/users/${id}`);
+  }
+
+  searchUser(): Observable<any> {
+    return this.getUsers(this.searchUrl + `&per_page=${this.pageSize}`).pipe(
+      map((users) => users)
+    );
   }
 }
