@@ -6,7 +6,6 @@ import { UsersService } from '../users.service';
 import { DialogService } from '../../../services/dialog.service';
 
 import { PageEvent } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -38,7 +37,6 @@ export class UserListComponent implements OnInit {
     private usersService: UsersService,
     private dialog: MatDialog,
     private dialogService: DialogService,
-    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -111,13 +109,5 @@ export class UserListComponent implements OnInit {
         this.dataSource = Object.values(users.body);
         this.totalCount = users.count;
       });
-  }
-
-  openSnackBar(message: string): void {
-    this.snackBar.open(message, undefined, {
-      duration: 1300,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'center',
-    });
   }
 }
