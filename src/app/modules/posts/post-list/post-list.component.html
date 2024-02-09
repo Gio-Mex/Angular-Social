@@ -49,8 +49,6 @@
   </div>
 </div>
 
-<mat-spinner diameter="50" style="margin: auto" *ngIf="isLoading"></mat-spinner>
-
 <div *ngIf="!noPosts; else noPostsFound" class="post-list-container">
   <div *ngIf="!isLoading">
     <mat-card *ngFor="let post of posts$ | async; let i = index">
@@ -106,7 +104,9 @@
   </div>
   </div>
 
-  <div *ngIf="!noPosts && !isLoading" class="pagination-container">
+  <mat-spinner diameter="50" style="margin: auto" *ngIf="isLoading"></mat-spinner>
+
+  <div *ngIf="!noPosts" [class.hide-pagination]="isLoading" class="pagination-container">
     <mat-paginator
       class="mat-elevation-z1"
       [length]="postsCount"

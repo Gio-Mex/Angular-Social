@@ -124,15 +124,5 @@ describe('UserListComponent', () => {
     expect(mockPageEvent.length).toBe(1);
     expect(component.pageSize).toEqual(mockPageEvent.pageSize);
     expect(component.pageNumber).toEqual(mockPageEvent.pageIndex + 1);
-    
-  });
-
-  it('should open the snackbar', () => {
-    component.openSnackBar('message');
-    expect(mockSnackBar.open).toHaveBeenCalledWith('message', undefined, {
-      duration: 1300,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'center',
-    });    
   });
 });

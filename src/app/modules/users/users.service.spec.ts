@@ -33,7 +33,7 @@ describe('UsersService', () => {
       expect(users).toEqual(mockResponse);
     });
 
-    const req = httpTestingController.expectOne('https://gorest.co.in/public/v2/users?' + mockQuery);
+    const req = httpTestingController.expectOne('https://gorest.co.in/public/v2/users' + mockQuery);
     expect(req.request.method).toEqual('GET');
     req.flush(mockResponse);
   });

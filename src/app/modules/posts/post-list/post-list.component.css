@@ -67,5 +67,9 @@ mat-paginator {
   padding-bottom: 10px;
 }
 
+.hide-pagination {
+  display: none;
+}
+
 .search-container button {
 margin: 0px;}

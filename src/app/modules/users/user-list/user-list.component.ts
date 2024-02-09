@@ -36,7 +36,7 @@ export class UserListComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private dialog: MatDialog,
-    private dialogService: DialogService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class UserListComponent implements OnInit {
     this.research = '';
     this.searchSubject = 'name';
     this.usersService
-      .getUsers(`page=${this.pageNumber}&per_page=${this.pageSize}`)
+      .getUsers(`?page=${this.pageNumber}&per_page=${this.pageSize}`)
       .subscribe((users) => {
         this.dataSource = users.body;
         this.totalCount = users.count;
@@ -59,8 +59,8 @@ export class UserListComponent implements OnInit {
     this.isLoading = true;
     this.usersService.pageSize = this.pageSize;
     this.searchSubject == 'name'
-      ? (this.searchUrl = `name=${this.research}`)
-      : (this.searchUrl = `email=${this.research}`);
+      ? (this.searchUrl = `?name=${this.research}`)
+      : (this.searchUrl = `?email=${this.research}`);
     this.usersService.searchUrl = this.searchUrl;
     this.usersService.searchUser().subscribe((users) => {
       if (users.body.length === 0) {
@@ -98,16 +98,20 @@ export class UserListComponent implements OnInit {
   }
 
   onPageChange(event: PageEvent): void {
+    this.isLoading = true;
     this.pageSize = event.pageSize;
     this.pageNumber = event.pageIndex + 1;
     this.usersService.pageSize = this.pageSize;
     this.usersService
       .getUsers(
-        `${`${this.searchUrl}`}&page=${this.pageNumber}&per_page=${this.pageSize}`
+        `${`?${this.searchUrl}`}&page=${this.pageNumber}&per_page=${
+          this.pageSize
+        }`
       )
       .subscribe((users) => {
-        this.dataSource = Object.values(users.body);
+        this.dataSource = users.body;
         this.totalCount = users.count;
+        this.isLoading = false;
       });
   }
 }

@@ -48,8 +48,6 @@
   </div>
 </div>
 
-<mat-spinner diameter="50" style="margin: auto" *ngIf="isLoading"></mat-spinner>
-
 <div *ngIf="!noUsers; else noUsersFound" class="table-container">
   <table
     *ngIf="!isLoading"
@@ -127,7 +125,9 @@
   <h2 style="text-align: center">No users found</h2>
 </ng-template>
 
-<div *ngIf="!noUsers && !isLoading" class="pagination-container">
+<mat-spinner diameter="50" style="margin: auto" *ngIf="isLoading"></mat-spinner>
+
+<div *ngIf="!noUsers" [class.hide-pagination]="isLoading" class="pagination-container">
   <mat-paginator
     class="mat-elevation-z4"
     [length]="totalCount"

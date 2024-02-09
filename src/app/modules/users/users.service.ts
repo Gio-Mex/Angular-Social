@@ -15,7 +15,7 @@ export class UsersService {
   constructor(private appDataService: AppDataService) {}
 
   getUsers(query: any): Observable<any> {
-    return this.appDataService.getData('/users?' + query);
+    return this.appDataService.getData('/users' + query);
   }
 
   addUser(data: object): Observable<User> {

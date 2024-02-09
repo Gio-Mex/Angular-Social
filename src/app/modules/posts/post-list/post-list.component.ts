@@ -24,11 +24,11 @@ export class PostListComponent {
   pageNumber = 1;
   postsCount!: number;
   openInput: boolean = false;
-  postTitle= '';
+  postTitle = '';
   postAuthors = new Map<number, string>();
   noPosts!: boolean;
   isLoading!: boolean;
-  
+
   constructor(
     private postsService: PostsService,
     private usersService: UsersService,
@@ -37,7 +37,7 @@ export class PostListComponent {
     private elementRef: ElementRef
   ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.isLoading = true;
     this.noPosts = false;
     this.openInput = false;
@@ -48,6 +48,8 @@ export class PostListComponent {
   }
 
   getPosts(query: string): void {
+    this.isLoading = true;
+    this.postAuthors = new Map();
     this.postsService
       .getPosts(query + `&per_page=${this.pageSize}`)
       .subscribe((_posts) => {
@@ -58,19 +60,20 @@ export class PostListComponent {
           this.noPosts = false;
           this.posts$ = of(_posts.body);
           this.postsCount = _posts.count;
-        for (let post of _posts.body) {
-          this.usersService.getUsers(`/${post.user_id}/`).subscribe((user) => {
-            const author = user.body.name;
-            this.postAuthors.set(post.id, author);
-          });
-          this.getComments(post.id).subscribe((_comments) => {;
-           this.comments.push(..._comments);
-           this.noPosts = false;
-           this.isLoading = false;
-          });
+          for (let i = 0; i < _posts.body.length; i++) {
+            const post = _posts.body[i];
+            this.usersService
+              .getUsers(`/${post.user_id}/`)
+              .subscribe((user) => {
+                const author = user.body.name;
+                this.postAuthors.set(post.id, author);
+              });
+            this.getComments(post.id).subscribe((_comments) => {
+              this.comments.push(..._comments);
+              this.isLoading = false;
+            });
+          }
         }
-        }
-
       });
   }
 
@@ -94,7 +97,7 @@ export class PostListComponent {
     this.comments = [];
     this.getPosts(`title=${postTitle}`);
   }
-  
+
   addPostDialog(): void {
     this.dialogService.dialogTitle = 'Add new Post';
     this.dialogService.field1Label = 'Title';
@@ -121,7 +124,8 @@ export class PostListComponent {
     this.comments = [];
     this.pageSize = event.pageSize;
     this.pageNumber = event.pageIndex + 1;
-    this.getPosts(`title=${this.postTitle}&page=${this.pageNumber}`)
-    this.elementRef.nativeElement.scrollIntoView({ behavior: 'smooth'});
+    this.getPosts(
+      `title=${this.postTitle}&page=${this.pageNumber}&per_page=${this.pageSize}`
+    );
   }
 }
